@@ -61,6 +61,8 @@ def train(device, num_epochs, batch_size, add_text):
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
                                                    step_size=3,
                                                    gamma=0.1)
+    # gamma of 0.1 seems veery low have you checked other values like 0.5?
+    # have you considered ReduceLROnPlateau, which only multiplies the LR if the loss is not decreasing
 
     # let's train it for num_ephocs epochs
     for epoch in range(num_epochs):
