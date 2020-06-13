@@ -11,6 +11,7 @@ def get_model():
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
 
     num_classes = 2  # 6 class (buses) + background
+    # (ofekp) why is the comment not matching the actual number of classes please?
     # get number of input features for the classifier
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     # replace the pre-trained head with a new one
@@ -38,7 +39,6 @@ def train(device, num_epochs, batch_size, add_text):
     dataset = ObjectDataset('data/train', get_transform(train=True))
     dataset_test = ObjectDataset('data/test', get_transform(train=False))
 
-
     # define training and validation data loaders
     data_loader = torch.utils.data.DataLoader(
         dataset, batch_size=batch_size, shuffle=True, num_workers=4,
@@ -56,6 +56,7 @@ def train(device, num_epochs, batch_size, add_text):
     params = [p for p in model.parameters() if p.requires_grad]
     optimizer = torch.optim.SGD(params, lr=0.005,
                                 momentum=0.9, weight_decay=0.0005)
+    # (ofekp) did you try Adam too?
     # and a learning rate scheduler
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
                                                    step_size=3,
@@ -72,7 +73,7 @@ def train(device, num_epochs, batch_size, add_text):
         # if epoch % 10 == 0:
         # save each epoch
         save_model(model, epoch, batch_size, add_text)
-    print("That's it trained!")
+    print("That's it, the model is trained!")
 
     return model, dataset_test
 
@@ -120,6 +121,7 @@ if __name__ == "__main__":
         batch_size = int(args.batch_size)
     else:
         batch_size = 2
+        # (ofekp) is this not too low?
 
     if args.add_text:
         add_text = args.add_text
