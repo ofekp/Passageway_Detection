@@ -64,6 +64,8 @@ class ObjectDataset(torch.utils.data.Dataset):
         image_id = torch.tensor([idx])
         area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
         # suppose all instances are not crowd
+        # (ofekp) "crowd" naming should be changed everywhere in this file,
+        #         it is probably based on code from this post https://github.com/pytorch/vision/issues/1700
         iscrowd = torch.zeros((num_anns,), dtype=torch.int64)
 
         target = {}
