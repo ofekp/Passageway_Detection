@@ -10,7 +10,7 @@ class ObjectDataset(torch.utils.data.Dataset):
     def __init__(self, root, transforms=None):
         self.root = root
         self.transforms = transforms
-        # load all imiage files, sorting them to
+        # load all image files, sorting them to
         # ensure that they are aligned
         self.imgs = list(sorted(os.listdir(os.path.join(root, "images"))))
         tags_dict = {}
